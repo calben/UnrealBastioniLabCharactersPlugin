@@ -61,39 +61,39 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(VisibleAnywhere)
-		UMaterial* MaterialBastioniLabGeneric;
+		class UMaterial* MaterialBastioniLabGeneric;
 
 	UPROPERTY(VisibleAnywhere)
-		UMaterial* MaterialBastioniLabTeeth;
+		class UMaterial* MaterialBastioniLabTeeth;
 
 	UPROPERTY(VisibleAnywhere)
-		UMaterial* MaterialBastioniLabFur;
+		class UMaterial* MaterialBastioniLabFur;
 
 	UPROPERTY(VisibleAnywhere)
-		UMaterial* MaterialBastioniLabPrivates;
+		class UMaterial* MaterialBastioniLabPrivates;
 
 	UPROPERTY(VisibleAnywhere)
-		UMaterial* MaterialBastioniLabEye;
+		class UMaterial* MaterialBastioniLabEye;
 
 	UPROPERTY(VisibleAnywhere)
-		UMaterial* MaterialBastioniLabCornea;
+		class UMaterial* MaterialBastioniLabCornea;
 
 	UPROPERTY(VisibleAnywhere)
-		UMaterial* MaterialBastioniLabSkin;
+		class UMaterial* MaterialBastioniLabSkin;
 
-	UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabGeneric;
+	class UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabGeneric;
 
-	UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabTeeth;
+	class UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabTeeth;
 
-	UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabFur;
+	class UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabFur;
 
-	UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabPrivates;
+	class UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabPrivates;
 
-	UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabEye;
+	class UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabEye;
 
-	UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabCornea;
+	class UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabCornea;
 
-	UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabSkin;
+	class UMaterialInstanceDynamic* MaterialInstanceDynamicBastioniLabSkin;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool bLoadDynamicMaterials;
