@@ -20,16 +20,40 @@ public:
 		class USkeletalMesh* ItemMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FName ItemName;
+		class UTexture2D* ItemPreviewTexture;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class UTexture2D* ItemPreviewTexture;
+		FName ItemName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FName ItemSlot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FName SocketName;
+
+	FEquippableItem() :
+		ItemMeshComponent(nullptr),
+		ItemMesh(nullptr),
+		ItemPreviewTexture(nullptr),
+		ItemName(FName::FName()),
+		ItemSlot(FName::FName()),
+		SocketName(FName::FName())
+	{};
+
+	FEquippableItem(class USkeletalMeshComponent* ItemMeshComponent,
+		class USkeletalMesh* ItemMesh,
+		class UTexture2D* ItemPreviewTexture,
+		FName ItemName,
+		FName ItemSlot,
+		FName SocketName) :
+		ItemMeshComponent(ItemMeshComponent),
+		ItemMesh(ItemMesh),
+		ItemPreviewTexture(ItemPreviewTexture),
+		ItemName(ItemName),
+		ItemSlot(ItemSlot),
+		SocketName(SocketName)
+	{};
+
 };
 
 /**
@@ -46,10 +70,7 @@ public:
 		TArray<FEquippableItem> EquippedItems;
 
 	UFUNCTION(BlueprintCallable)
-		bool EquipNewItem(class USkeletalMesh* ItemMesh, FName ItemName, FName ItemSlot, bool bOverwriteExistingItemInSlot = true);
-
-	UFUNCTION(BlueprintCallable)
-		bool EquipItem(FEquippableItem Item, bool bOverwriteExistingItemInSlot = true);
+		bool EquipItem(FEquippableItem Item, bool bOverwriteExistingItemInSlot = true, bool bSetMasterPoseComponent = true);
 
 	UFUNCTION(BlueprintCallable)
 		FEquippableItem GetItemInSlot(FName ItemSlot);
