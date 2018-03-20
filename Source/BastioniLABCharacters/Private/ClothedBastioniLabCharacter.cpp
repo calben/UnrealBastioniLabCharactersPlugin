@@ -22,7 +22,7 @@ bool AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bool bOverwri
 		{
 			Item.ItemMeshComponent = MeshComponent;
 			MeshComponent->RegisterComponentWithWorld(GetWorld());
-			MeshComponent->SetupAttachment(GetMesh(), Item.ItemSlot);
+			MeshComponent->AttachTo(GetMesh(), Item.SocketName, EAttachLocation::SnapToTarget);
 			AddOwnedComponent(MeshComponent);
 			MeshComponent->SetSkeletalMesh(Item.ItemMesh, true);
 			if (bSetMasterPoseComponent)
