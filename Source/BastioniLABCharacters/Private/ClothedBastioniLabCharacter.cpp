@@ -5,16 +5,7 @@
 #include "Runtime/Engine/Classes/Engine/SkeletalMesh.h"
 #include "UObjectGlobals.h"
 
-bool AClothedBastioniLabCharacter::EquipNewItem(USkeletalMesh* ItemMesh, FName ItemName, FName ItemSlot, bool bOverwriteExistingItemInSlot)
-{
-	FEquippableItem Item;
-	Item.ItemMesh = ItemMesh;
-	Item.ItemName = ItemName;
-	Item.ItemSlot = ItemSlot;
-	return EquipItem(Item, bOverwriteExistingItemInSlot);
-}
-
-bool AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bool bOverwriteExistingItemInSlot)
+bool AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bool bOverwriteExistingItemInSlot, bool bSetMasterPoseComponent)
 {
 	if (Item.ItemMesh != nullptr && !Item.ItemName.IsNone() && !Item.ItemSlot.IsNone())
 	{
@@ -26,13 +17,18 @@ bool AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bool bOverwri
 				ExistingItem.ItemMeshComponent->DestroyComponent();
 			}
 		}
-		USkeletalMeshComponent* MeshComponent = NewObject<USkeletalMeshComponent>(USkeletalMeshComponent::StaticClass());
+		USkeletalMeshComponent* MeshComponent = NewObject<USkeletalMeshComponent>(this);
 		if (MeshComponent != nullptr)
 		{
 			Item.ItemMeshComponent = MeshComponent;
-			MeshComponent->SetupAttachment(RootComponent);
-			MeshComponent->SetMasterPoseComponent(GetMesh());
+			MeshComponent->RegisterComponentWithWorld(GetWorld());
+			MeshComponent->AttachTo(GetMesh(), Item.SocketName, EAttachLocation::SnapToTarget);
+			AddOwnedComponent(MeshComponent);
 			MeshComponent->SetSkeletalMesh(Item.ItemMesh, true);
+			if (bSetMasterPoseComponent)
+			{
+				MeshComponent->SetMasterPoseComponent(GetMesh());
+			}
 			return true;
 		}
 	}
