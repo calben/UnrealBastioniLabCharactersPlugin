@@ -349,3 +349,22 @@ struct FBastioniLabCharacterMorphTargetBuffer {
 		};
 	};
 };
+
+USTRUCT(BlueprintType)
+struct FBastioniLabCharacterMacroExpression
+{
+
+	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TMap<EBastioniLabCharacterMorphTarget, float> MorphTargetExpressionValues;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float Weight;
+
+};

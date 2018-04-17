@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "ConstructorHelpers.h"
+#include "BastioniLabCharacterMorphTargets.h"
 #include "BastioniLabCharacter.generated.h"
 
 #define MATERIAL_SLOT_BastioniLabGeneric 0
@@ -103,4 +104,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void SetupBastioniLabMaterials();
+
+	UFUNCTION(BlueprintCallable)
+		void ApplyMacroExpression(FBastioniLabCharacterMacroExpression MacroExpression, float Weight);
+
 };

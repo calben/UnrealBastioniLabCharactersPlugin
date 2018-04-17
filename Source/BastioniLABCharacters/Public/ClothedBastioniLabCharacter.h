@@ -70,7 +70,7 @@ public:
 		TArray<FEquippableItem> EquippedItems;
 
 	UFUNCTION(BlueprintCallable)
-		bool EquipItem(FEquippableItem Item, bool bOverwriteExistingItemInSlot = true, bool bSetMasterPoseComponent = true);
+		FEquippableItem EquipItem(FEquippableItem Item, bool bOverwriteExistingItemInSlot = true, bool bSetMasterPoseComponent = true);
 
 	UFUNCTION(BlueprintCallable)
 		FEquippableItem GetItemInSlot(FName ItemSlot);

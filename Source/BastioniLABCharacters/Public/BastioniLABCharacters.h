@@ -4,8 +4,11 @@
 
 #include "ModuleManager.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(LogBastioniLabCharacters, Log, All);
+
 class FBastioniLABCharactersModule : public IModuleInterface
 {
+
 public:
 
 	/** IModuleInterface implementation */

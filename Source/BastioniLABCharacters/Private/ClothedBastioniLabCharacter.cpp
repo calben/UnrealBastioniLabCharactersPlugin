@@ -5,7 +5,7 @@
 #include "Runtime/Engine/Classes/Engine/SkeletalMesh.h"
 #include "UObjectGlobals.h"
 
-bool AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bool bOverwriteExistingItemInSlot, bool bSetMasterPoseComponent)
+FEquippableItem AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bool bOverwriteExistingItemInSlot, bool bSetMasterPoseComponent)
 {
 	if (Item.ItemMesh != nullptr && !Item.ItemName.IsNone() && !Item.ItemSlot.IsNone())
 	{
@@ -29,10 +29,10 @@ bool AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bool bOverwri
 			{
 				MeshComponent->SetMasterPoseComponent(GetMesh());
 			}
-			return true;
+			return Item;
 		}
 	}
-	return false;
+	return Item;
 }
 
 

@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BastioniLabCharacter.h"
+#include "BastioniLABCharacters.h"
+#include "BastioniLABCharactersBPLibrary.h"
 #include "Runtime/Engine/Classes/Materials/MaterialInstanceDynamic.h"
 #include "Runtime/Engine/Classes/Materials/Material.h"
 #include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
@@ -61,3 +63,12 @@ void ABastioniLabCharacter::SetupBastioniLabMaterials()
 	}
 }
 
+void ABastioniLabCharacter::ApplyMacroExpression(FBastioniLabCharacterMacroExpression MacroExpression, float Weight)
+{
+	for (auto MorphTargetExpressionValue : MacroExpression.MorphTargetExpressionValues)
+	{
+		FName Name = UBastioniLABCharactersBPLibrary::GetMorphTargetNameForBastioniLabCharacterMorphTarget(MorphTargetExpressionValue.Key);
+		UE_LOG(LogBastioniLabCharacters, Log, TEXT("Morphing %s on %s to %d"), *Name.ToString(), *GetName(), MacroExpression.Weight * Weight);
+		GetMesh()->SetMorphTarget(Name, MacroExpression.Weight * Weight);
+	}
+}
