@@ -368,3 +368,71 @@ public:
 		float Weight;
 
 };
+
+USTRUCT(BlueprintType)
+struct FMorphRequest {
+
+	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float Weight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName MorphName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float MorphValue;
+};
+
+
+USTRUCT(BlueprintType)
+struct FMorphRequestHandler {
+
+	GENERATED_BODY()
+
+public:
+
+	TMap<FName, TArray<FMorphRequest>> CollectedMorphRequests;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool bClampMorphTargetValues = true;
+
+	void RequestMorph(FMorphRequest MorphRequest)
+	{
+		if (CollectedMorphRequests.Contains(MorphRequest.MorphName))
+		{
+			TArray<FMorphRequest> MorphRequests = CollectedMorphRequests[MorphRequest.MorphName];
+			MorphRequests.Add(MorphRequest);
+			CollectedMorphRequests[MorphRequest.MorphName] = MorphRequests;  // this actually shouldn't be necessary
+		}
+		else
+		{
+			TArray<FMorphRequest> MorphRequests;
+			MorphRequests.Add(MorphRequest);
+			CollectedMorphRequests.Add(MorphRequest.MorphName, MorphRequests);
+		}
+	}
+
+	TMap<FName, float> ResolveRequestsToMorphValues()
+	{
+		TMap<FName, float> Result;
+		for (TPair<FName, TArray<FMorphRequest>> KV : CollectedMorphRequests)
+		{
+			float MorphValue = 0.f;
+			for (FMorphRequest MorphRequest : KV.Value)
+			{
+				MorphValue += MorphRequest.Weight * MorphRequest.MorphValue;
+			}
+			MorphValue /= KV.Value.Num();
+			if (bClampMorphTargetValues)
+			{
+				MorphValue = FMath::Clamp(MorphValue, 0.f, 1.f);
+			}
+			Result.Add(KV.Key, MorphValue);
+		}
+		return Result;
+	}
+
+};
