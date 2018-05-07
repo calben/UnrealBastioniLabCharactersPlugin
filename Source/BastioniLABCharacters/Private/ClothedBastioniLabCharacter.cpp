@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ClothedBastioniLabCharacter.h"
+#include "BastioniLABCharacters.h"
 #include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/Engine/SkeletalMesh.h"
 #include "UObjectGlobals.h"
@@ -14,7 +15,7 @@ FEquippableItem AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bo
 			auto ExistingItem = GetItemInSlot(Item.ItemSlot);
 			if (ExistingItem.ItemMeshComponent != nullptr)
 			{
-				ExistingItem.ItemMeshComponent->DestroyComponent();
+				UnequipItem(ExistingItem.ItemName);
 			}
 		}
 		USkeletalMeshComponent* MeshComponent = NewObject<USkeletalMeshComponent>(this);
@@ -35,8 +36,6 @@ FEquippableItem AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bo
 	return Item;
 }
 
-
-
 FEquippableItem AClothedBastioniLabCharacter::GetItemInSlot(FName ItemSlot)
 {
 	FEquippableItem EmptyItem;
@@ -48,4 +47,18 @@ FEquippableItem AClothedBastioniLabCharacter::GetItemInSlot(FName ItemSlot)
 		}
 	}
 	return EmptyItem;
+}
+
+bool AClothedBastioniLabCharacter::UnequipItem(FName ItemName)
+{
+	for (int32 i = EquippedItems.Num() - 1; i >= 0; --i)
+	{
+		if (EquippedItems[i].ItemName.IsEqual(ItemName))
+		{
+			EquippedItems[i].ItemMeshComponent->DestroyComponent();
+			EquippedItems.RemoveAt(i, 1, false);
+			return true;
+		}
+	}
+	return false;
 }

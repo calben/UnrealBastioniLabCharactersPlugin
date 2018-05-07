@@ -74,4 +74,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		FEquippableItem GetItemInSlot(FName ItemSlot);
+
+	UFUNCTION(BlueprintCallable)
+		bool UnequipItem(FName ItemName);
+
 };
