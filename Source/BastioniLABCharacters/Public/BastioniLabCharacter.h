@@ -102,6 +102,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UTexture* SkinTexture;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FMorphRequestHandler MorphRequestHandler;
+
 	UFUNCTION(BlueprintCallable)
 		void SetupBastioniLabMaterials();
 
