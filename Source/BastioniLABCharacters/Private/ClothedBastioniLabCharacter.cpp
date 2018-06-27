@@ -23,13 +23,31 @@ FEquippableItem AClothedBastioniLabCharacter::EquipItem(FEquippableItem Item, bo
 		{
 			Item.ItemMeshComponent = MeshComponent;
 			MeshComponent->RegisterComponentWithWorld(GetWorld());
-			MeshComponent->AttachTo(GetMesh(), Item.SocketName, EAttachLocation::SnapToTarget);
+			MeshComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 			AddOwnedComponent(MeshComponent);
 			MeshComponent->SetSkeletalMesh(Item.ItemMesh, true);
 			if (bSetMasterPoseComponent)
 			{
 				MeshComponent->SetMasterPoseComponent(GetMesh());
 			}
+			return Item;
+		}
+	}
+	return Item;
+}
+
+FEquippableActorItem AClothedBastioniLabCharacter::EquipActorItem(FEquippableActorItem Item, bool bOverwriteExistingItemInSlot, bool bSetMasterPoseComponent)
+{
+	if (Item.ActorClass != nullptr && !Item.ItemName.IsNone() && !Item.ItemSlot.IsNone())
+	{
+		FVector Location(0.0f, 0.0f, 0.0f);
+		FRotator Rotation(0.0f, 0.0f, 0.0f);
+		FActorSpawnParameters SpawnInfo;
+		AActor* Actor = GetWorld()->SpawnActor<AActor>(Item.ActorClass, Location, Rotation, SpawnInfo);
+		if (Actor != nullptr)
+		{
+			Item.Actor = Actor;
+			Actor->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, Item.SocketName);
 			return Item;
 		}
 	}
